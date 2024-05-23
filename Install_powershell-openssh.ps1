@@ -30,17 +30,11 @@ if ($Error.count -ne 0)
 # j'install powershell https://learn.microsoft.com/fr-fr/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4
 msiexec.exe /package "$env:TEMP\Powershell.msi" /quiet ENABLE_PSREMOTING=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 
-# La commande `Copy-Item "C:\ProgramData\ssh\sshd_config" "C:\ProgramData\ssh\sshd_config.sav"` est
-# utilisée pour créer une copie de sauvegarde du fichier `sshd_config` situé dans le dossier
-# `C:\ProgramData répertoire \ssh`. Il copie le fichier `sshd_config` et l'enregistre sous
-# `sshd_config.sav` dans le même répertoire. Ceci est fait pour conserver le fichier de configuration
-# d'origine avant d'y apporter des modifications.
+# Je backup le fichier de conf
 Copy-Item "C:\ProgramData\ssh\sshd_config" "C:\ProgramData\ssh\sshd_config.sav"
 
 
-# La variable `$sshd` contient une chaîne multiligne qui représente les paramètres de configuration du
-# serveur OpenSSH (`sshd`). Cette chaîne est utilisée pour mettre à jour le fichier `sshd_config`
-# situé dans le répertoire `C:\ProgramData\ssh`.
+# Variable contenant le contenue du fichier sshd_config
 $sshd = @'
 # This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
@@ -137,20 +131,14 @@ Subsystem	sftp	sftp-server.exe
 #    AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
 '@
 
-# La commande `set-Content` est utilisée pour définir le contenu d'un fichier. Dans ce cas, il est
-# utilisé pour mettre à jour le contenu du fichier `sshd_config` situé dans
-# "C:\ProgramData\ssh\sshd_config" avec la valeur de la variable `$sshd`. La variable `$sshd` contient
-# une chaîne multiligne qui représente les paramètres de configuration du serveur OpenSSH (`sshd`). En
-# utilisant `set-Content`, le contenu du fichier `sshd_config` est remplacé par la configuration mise
-# à jour spécifiée dans la variable `$sshd`.
+# Je crée le fichier avec le contenue de la variable crée plus haut
 set-Content -Path "C:\ProgramData\ssh\sshd_config" -value $sshd
 
 # La commande est utilisée pour définir le type de démarrage du service SSH sur
 # automatique.
 set-service -name (Get-Service  |  Where-Object {$_.name -match "sshd"}).Name -startuptype automatic
 
-# La commande `restart-service (Get-Service | Where-Object {.name -match "sshd"}).Name` est utilisée
-# pour redémarrer le service SSH sur la machine.
+# restart du service SSH sur la machine.
 restart-service (Get-Service  |  Where-Object {$_.name -match "sshd"}).Name
 
 # Crée une regle firewal, a actrivé si vous ne le faite pas via GPO
