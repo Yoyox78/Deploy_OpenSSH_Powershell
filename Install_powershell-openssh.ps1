@@ -19,7 +19,7 @@ sleep 15
 # je reset les errors
 $Error.Clear()
 # Je télécharge powershell, pensez a mettre à jour les version via les nouvelle URL
-Invoke-WebRequest -URI "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi"  -OutFile "$env:TEMP\Powershell.msi" -UseBasicParsing
+Invoke-WebRequest -URI "https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi"  -OutFile "$env:TEMP\Powershell.msi" -UseBasicParsing
 
 # On verifie que le fichier c'est bien dll
 if ($Error.count -ne 0)
