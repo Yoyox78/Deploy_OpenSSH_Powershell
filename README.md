@@ -5,7 +5,7 @@ cela pour plusieurs raison
 
 2 - se connecter au poste via SSH avec powershell 7 avec enter-pssession -hostname PC
 
-Les élément a modifier :
+Les éléments à modifier :
 
 Ligne 7 et 22 : mettre à jour l'URL par la nouvelle version au besoin
 
