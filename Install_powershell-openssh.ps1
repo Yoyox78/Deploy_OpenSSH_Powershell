@@ -3,8 +3,8 @@
 
 # je reset les errors
 $Error.Clear()
-# Je télécharge openssh
-Invoke-WebRequest -URI "https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi" -OutFile "$env:TEMP\ServeurSSH.msi" -UseBasicParsing
+# Je télécharge openssh https://github.com/PowerShell/Win32-OpenSSH/releases/
+Invoke-WebRequest -URI "https://github.com/PowerShell/Win32-OpenSSH/releases/download/v9.8.1.0p1-Preview/OpenSSH-Win64-v9.8.1.0.msi" -OutFile "$env:TEMP\ServeurSSH.msi" -UseBasicParsing
 msiexec.exe /package "$env:TEMP\ServeurSSH.msi" /quiet
 
 # Si Invoke genere une erreur alors on quitte
